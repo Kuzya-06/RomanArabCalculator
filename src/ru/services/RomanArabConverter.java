@@ -64,7 +64,7 @@ public class RomanArabConverter {
     }
 
     public static boolean isRomanNumber(String text) {
-        String str = new String(text);
+        String str = text;
         str = str.replace("I", "");
         str = str.replace("V", "");
         str = str.replace("X", "");
