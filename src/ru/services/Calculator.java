@@ -10,7 +10,7 @@ public class Calculator {
 
     private Expression expression;
 
-    public RomanArabNumber calculate(String str) {
+    public void calculate(String str) {
 
         RomanArabNumber ravno = null;
         try {
@@ -35,14 +35,12 @@ public class Calculator {
             }
 
             ravno.setType(expression.getRomanOrArabEnum());
-            // switch case   +-/* РѕР±СЂР°Р±РѕС‚Р°С‚СЊ 4 СЃР»СѓС‡Р°СЏ
+
+            System.out.println(ravno);
 
         } catch (Exception ex) {
+            System.out.println("Ошибка работы калькулятора");
             ex.printStackTrace();
         }
-
-        return ravno;
     }
-
-
 }

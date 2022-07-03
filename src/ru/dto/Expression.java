@@ -8,15 +8,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Expression {
-    // РїРµСЂРІРѕРµ Р·РЅР°С‡РµРЅРёРµ
+    // первое значение
     private RomanArabNumber firstValue;
-    // РІС‚РѕСЂРѕРµ Р·РЅР°С‡РµРЅРёРµ
+    // второе значение
     private RomanArabNumber secondValue;
-    // Р·РЅР°Рє
+    // знак
     private Sign sign;
-    // Р°СЂР°Р±СЃРєРёРµ РёР»Рё СЂРёРјСЃРєРёРµ С†РёС„СЂС‹
+    // арабские или римские цифры
     private RomanOrArabEnum romanOrArabEnum = RomanOrArabEnum.TYPE_NOT_FOUND;
-
 
 
     public Expression(String str) {
@@ -40,70 +39,60 @@ public class Expression {
     }
 
     private void parse(String str) {
-        // СѓР±СЂР°Р»Рё РІРµР·РґРµ РїСЂРѕР±РµР»С‹
+        // убрали везде пробелы
         String text = str.intern().replace(" ", "");
-        try {
-            // С„РѕСЂРјРёСЂСѓРµРј СЃРїРёСЃРѕРє РЅР° РѕСЃРЅРѕРІРµ РјР°СЃСЃРёРІР° "+", "-", "/", "*"
-            ArrayList<String> signList = new ArrayList<>(Arrays.asList("+", "-", "/", "*"));
 
-            // СЃС‡РёС‚Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ Р·РЅР°РєРѕРІ РІ СЃС‚СЂРѕРєРµ
-            int signCounter = 0;
-            int signPosition;
-            String lastSign = "";
-            for (String sign : signList) {
-                int index = 0;
-                if (text.contains(sign)) {
-                    while (true) {
-                        index = text.indexOf(sign, index);
-                        if (index != -1) {
-                            signCounter++;
-                            signPosition = index;
-                            lastSign = sign;
-                        } else {
-                            break;
-                        }
-                        index = index + 1;
+        // формируем список на основе массива "+", "-", "/", "*"
+        ArrayList<String> signList = new ArrayList<>(Arrays.asList("+", "-", "/", "*"));
+
+        // считает количество знаков в строке
+        int signCounter = 0;
+        int signPosition;
+        String lastSign = "";
+        for (String sign : signList) {
+            int index = 0;
+            if (text.contains(sign)) {
+                while (true) {
+                    index = text.indexOf(sign, index);
+                    if (index != -1) {
+                        signCounter++;
+                        signPosition = index;
+                        lastSign = sign;
+                    } else {
+                        break;
                     }
+                    index = index + 1;
                 }
             }
+        }
 
+
+        if (signCounter == 1) {
             sign = Sign.getByValue(lastSign);
 
-            if (signCounter == 1) {
-                String[] numbers = text.split("\\" + lastSign);
-                firstValue = new RomanArabNumber(numbers[0]);
-                secondValue = new RomanArabNumber(numbers[1]);
-                if (!(firstValue.getType().equals(RomanOrArabEnum.TYPE_NOT_FOUND) ||
-                        secondValue.getType().equals(RomanOrArabEnum.TYPE_NOT_FOUND))) {
+            String[] numbers = text.split("\\" + lastSign);
+            firstValue = new RomanArabNumber(numbers[0]);
+            secondValue = new RomanArabNumber(numbers[1]);
+            if (!(firstValue.getType().equals(RomanOrArabEnum.TYPE_NOT_FOUND) ||
+                    secondValue.getType().equals(RomanOrArabEnum.TYPE_NOT_FOUND))) {
 
-                    if (firstValue.getType().equals(secondValue.getType())) {
-                        romanOrArabEnum = firstValue.getType();
-                    } else {
-                        try {
-                            throw new IllegalArgumentException();
-                        } catch ( IllegalArgumentException e){
-                            System.out.println("T.k. ispolzuetsya odnovremenno raznye sistemy schisleniya - С‚.Рє. РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ СЂР°Р·РЅС‹Рµ СЃРёСЃС‚РµРјС‹ СЃС‡РёСЃР»РµРЅРёСЏ");
-                        }
-                        }
+                if (firstValue.getType().equals(secondValue.getType())) {
+                    romanOrArabEnum = firstValue.getType();
                 } else {
-                    try {
-                        throw new IllegalArgumentException();
-                    } catch (IllegalArgumentException e){
-                        System.out.println("Ne udalos' opredelit' tip dannyh chisla - РќРµ СѓРґР°Р»РѕСЃСЊ РѕРїСЂРµРґРµР»РёС‚СЊ С‚РёРї РґР°РЅРЅС‹С… С‡РёСЃР»Р°");
-                    }
+                    throw new IllegalArgumentException("Используются одновременно разные системы счисления");
                 }
-
             } else {
-                try {
-                    throw new IllegalArgumentException();
-                } catch (IllegalArgumentException e){
-                    System.out.println("T.k. stroka ne yavlyaetsya matematicheskoy operaciey. - С‚.Рє. СЃС‚СЂРѕРєР° РЅРµ СЏРІР»СЏРµС‚СЃСЏ РјР°С‚РµРјР°С‚РёС‡РµСЃРєРѕР№ РѕРїРµСЂР°С†РёРµР№");
-                }
+                throw new IllegalArgumentException("Не удалось определить тип данных числа");
             }
 
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
+        } else {
+            if(signCounter==0) {
+                throw new IllegalArgumentException("Cтрока не является математической операцией");
+            }else{
+                throw new IllegalArgumentException("формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
+            }
         }
+
 
     }
 

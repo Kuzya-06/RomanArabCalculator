@@ -17,6 +17,7 @@ public class RomanArabNumber {
         strValue = String.valueOf(value);
         type = RomanOrArabEnum.ARAB;
     }
+
     private void parse(String str) {
         type = RomanArabConverter.isRomanOrArab(str);
         switch (type) {
@@ -29,13 +30,7 @@ public class RomanArabNumber {
                 intValue = Integer.parseInt(str);
                 break;
             case TYPE_NOT_FOUND:
-                try{
-                    throw new IllegalArgumentException();
-                } catch (IllegalArgumentException e){
-                    System.out.println("Ошибка парсинга RomanArabNumber");
-                }
-
-
+                throw new IllegalArgumentException("Ошибка парсинга RomanArabNumber");
         }
     }
 
@@ -64,15 +59,9 @@ public class RomanArabNumber {
             case ARAB:
                 return intValue.toString();
             case TYPE_NOT_FOUND:
-                try {
-                    throw new IllegalArgumentException();
-                } catch (IllegalArgumentException e){
-                    System.out.println("Ошибка типа данных");
-                }
-
+                throw new IllegalArgumentException("Ошибка типа данных");
         }
 
-       throw new IllegalArgumentException("Oshibka - Ошибка в методе toString класса RomanArabNumber");
-
+        throw new IllegalArgumentException("Ошибка в методе toString класса RomanArabNumber");
     }
 }

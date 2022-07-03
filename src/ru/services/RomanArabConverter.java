@@ -4,11 +4,21 @@ import ru.enums.RomanOrArabEnum;
 
 public class RomanArabConverter {
 
+    private static String[] roman = {"O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
+            "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
+            "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L", "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX", "LX",
+            "LXI", "LXII", "LXIII", "LXIV", "LXV", "LXVI", "LXVII", "LXVIII", "LXIX", "LXX",
+            "LXXI", "LXXII", "LXXIII", "LXXIV", "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX",
+            "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC",
+            "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"
+    };
+
     public static RomanOrArabEnum isRomanOrArab(String str) {
 
         boolean isArabNumber = false;
         boolean isRomanNumber = false;
 
+        // Проверка - парсится ли в int?
         try {
             int arabValue = Integer.parseInt(str);
             isArabNumber = true;
@@ -35,32 +45,30 @@ public class RomanArabConverter {
 
 
     public static int convertRomanToArab(String roman) {
-        try {
-            if (roman.equals("I")) {
-                return 1;
-            } else if (roman.equals("II")) {
-                return 2;
-            } else if (roman.equals("III")) {
-                return 3;
-            } else if (roman.equals("IV")) {
-                return 4;
-            } else if (roman.equals("V")) {
-                return 5;
-            } else if (roman.equals("VI")) {
-                return 6;
-            } else if (roman.equals("VII")) {
-                return 7;
-            } else if (roman.equals("VIII")) {
-                return 8;
-            } else if (roman.equals("IX")) {
-                return 9;
-            } else if (roman.equals("X")) {
-                return 10;
-            }
-        } catch (Exception e) {
-            throw new IllegalArgumentException("РћС€РёР±РєР° РїР°СЂСЃРёРЅР°РіР° СЂРёРјСЃРєРѕРіРѕ С‡РёСЃР»Р° " + roman);
+
+        if (roman.equals("I")) {
+            return 1;
+        } else if (roman.equals("II")) {
+            return 2;
+        } else if (roman.equals("III")) {
+            return 3;
+        } else if (roman.equals("IV")) {
+            return 4;
+        } else if (roman.equals("V")) {
+            return 5;
+        } else if (roman.equals("VI")) {
+            return 6;
+        } else if (roman.equals("VII")) {
+            return 7;
+        } else if (roman.equals("VIII")) {
+            return 8;
+        } else if (roman.equals("IX")) {
+            return 9;
+        } else if (roman.equals("X")) {
+            return 10;
         }
-        return -1;
+
+        throw new IllegalArgumentException("Ошибка парсинага римского числа " + roman);
     }
 
     public static boolean isRomanNumber(String text) {
@@ -76,43 +84,24 @@ public class RomanArabConverter {
         if (str.length() == 0) {
             return true;
         } else {
-            // Р·РЅР°С‡РёС‚ РЅРµ СЂРёРјСЃРєР°СЏ
+            // значит не римская
             return false;
         }
     }
-/*
-    public static String convertArabToRoman(String arabStr){
 
-        String text = "-1";
-        try {
-
-            text = convertArabToRoman(arabStr);
-
-        }catch(Exception ex){
-//            throw new IllegalArgumentException("РћС€РёР±РєР° РєРѕРЅРІРµСЂС‚Р°С†РёРё Р°СЂР°Р±СЃРєРѕРіРѕ С‡РёСЃР»Р° РІ СЂРёРјСЃРєРѕРµ. Р§РёСЃР»Рѕ = " + arabStr);
-        }
-
-        return text;
-    }
-*/
 
     public static String convertArabToRoman(int numArabian) {
-        String[] roman = {"O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
-                "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
-                "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L", "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX", "LX",
-                "LXI", "LXII", "LXIII", "LXIV", "LXV", "LXVI", "LXVII", "LXVIII", "LXIX", "LXX",
-                "LXXI", "LXXII", "LXXIII", "LXXIV", "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX",
-                "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC",
-                "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"
-        };
 
         if (numArabian >= 0) {
-            final String s = roman[numArabian];
-            return s;
-        } else {
-            return "Otricatel'noe rimskoe chislo - РІ СЂРёРјСЃРєРѕР№ СЃРёСЃС‚РµРјРµ РЅРµС‚ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С… С‡РёСЃРµР»";
+            if(numArabian <= roman.length - 1) {
+                return roman[numArabian];
+            } else{
+                throw new IllegalArgumentException("По условию задачи римские числа не больше 100");
             }
+        } else {
+            throw new IllegalArgumentException("В римской системе нет отрицательных чисел");
         }
     }
+}
 
 
