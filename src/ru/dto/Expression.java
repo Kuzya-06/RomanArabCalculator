@@ -17,7 +17,6 @@ public class Expression {
     // арабские или римские цифры
     private RomanOrArabEnum romanOrArabEnum = RomanOrArabEnum.TYPE_NOT_FOUND;
 
-
     public Expression(String str) {
         parse(str);
     }
@@ -69,10 +68,15 @@ public class Expression {
 
         if (signCounter == 1) {
             sign = Sign.getByValue(lastSign);
-
-            String[] numbers = text.split("\\" + lastSign);
+            String[] numbers = text.split("\\" + lastSign); // нужно экранировать символ (lastSign) с помощью двух обратных слешей
             firstValue = new RomanArabNumber(numbers[0]);
             secondValue = new RomanArabNumber(numbers[1]);
+
+            if(firstValue.getIntValue()<1 || firstValue.getIntValue()>10 ||
+                    secondValue.getIntValue()<1 || secondValue.getIntValue()>10){
+                throw new IllegalArgumentException("Числа должны быть от 1 до 10");
+            }
+
             if (!(firstValue.getType().equals(RomanOrArabEnum.TYPE_NOT_FOUND) ||
                     secondValue.getType().equals(RomanOrArabEnum.TYPE_NOT_FOUND))) {
 
@@ -92,8 +96,5 @@ public class Expression {
                 throw new IllegalArgumentException("формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
             }
         }
-
-
     }
-
 }

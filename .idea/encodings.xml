@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/ru/Main.java" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/ru/dto/Expression.java" charset="windows-1251" />
-    <file url="PROJECT" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/ru/services/Calculator.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/ru/services/RomanArabConverter.java" charset="windows-1251" />
+    <file url="PROJECT" charset="windows-1251" />
   </component>
 </project>

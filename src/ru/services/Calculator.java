@@ -2,6 +2,7 @@ package ru.services;
 
 import ru.dto.Expression;
 import ru.dto.RomanArabNumber;
+import ru.enums.RomanOrArabEnum;
 import ru.enums.Sign;
 
 import javax.sound.midi.Soundbank;
@@ -10,8 +11,9 @@ public class Calculator {
 
     private Expression expression;
 
-    public void calculate(String str) {
-
+    // public void calculate(String str) {
+    public String calculate(String str) {
+        String str1="";
         RomanArabNumber ravno = null;
         try {
             expression = new Expression(str);
@@ -35,12 +37,19 @@ public class Calculator {
             }
 
             ravno.setType(expression.getRomanOrArabEnum());
+            //   System.out.println(ravno);
 
-            System.out.println(ravno);
+            if (ravno.getIntValue() < 1 && expression.getRomanOrArabEnum() == RomanOrArabEnum.ROMAN) {
+                throw new IllegalArgumentException("Выражение для римских цифр только положительное");
+            } else {
+                 str1 = ravno.toString();
+            }
+
 
         } catch (Exception ex) {
-            System.out.println("Ошибка работы калькулятора");
+            //   System.out.println("Ошибка работы калькулятора");
             ex.printStackTrace();
         }
+        return str1;
     }
 }
